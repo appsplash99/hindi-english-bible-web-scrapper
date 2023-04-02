@@ -176,10 +176,18 @@ func main() {
 				}()
 				// //////////////////////////////////////////////////
 
+				// //////////////////////////////////////////////////
+				// when book_name is Leviticus - have a proper hindi book_name
+				bible_hindi_book_name := hindiPage.MustElement(CSS_SELECTORS.book_name).MustText()
+				if current_book_num == "03" || lower_case_book_name == "leviticus" {
+					bible_hindi_book_name = "लैव्यवस्था"
+				}
+				// //////////////////////////////////////////////////
+
 				hindiEnglishBibleDetails := HindiEnglishBibleDetails{
 					book_name: SupportedLanguages{
 						English: englishPage.MustElement(CSS_SELECTORS.book_name).MustText(),
-						Hindi:   hindiPage.MustElement(CSS_SELECTORS.book_name).MustText(),
+						Hindi:   bible_hindi_book_name,
 					},
 					allVerses: SupportedLanguages{
 						English: englishPage.MustElement(CSS_SELECTORS.verses).MustText(),
