@@ -1,3 +1,7 @@
+//// Script #1
+//// Scrape bible verses from bible-website
+//// and save them in json files
+
 package main
 
 ////////////////////////
