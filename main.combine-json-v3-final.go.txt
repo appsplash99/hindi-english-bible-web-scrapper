@@ -1,0 +1,72 @@
+//// Script #2
+//// Generate a single JSON file from multiple JSON files
+//// This is the third version of the code
+//// generated JSON is formatted and indented
+
+package main
+
+import (
+	"encoding/json"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+)
+
+type SupportedLanguages struct {
+	English string `json:"english"`
+	Hindi   string `json:"hindi"`
+}
+
+type Verses struct {
+	VerseCount  string             `json:"verse_count"`
+	BookNum     string             `json:"book_number"`
+	ChapterNum  string             `json:"chapter_number"`
+	BookName    SupportedLanguages `json:"book_name"`
+	Verse       SupportedLanguages `json:"verse"`
+	VerseNumber int                `json:"verse_number"`
+}
+
+func main() {
+	var allVerses []Verses
+
+	// read all JSON files from the "json-data" folder
+	jsonFiles, err := filepath.Glob("json-data/*.json")
+	if err != nil {
+		panic(err)
+	}
+
+	// combine all arrays from each JSON file into a single array
+	for _, jsonFile := range jsonFiles {
+		file, err := os.Open(jsonFile)
+		if err != nil {
+			panic(err)
+		}
+
+		byteValue, err := ioutil.ReadAll(file)
+		if err != nil {
+			panic(err)
+		}
+
+		var verses []Verses
+		err = json.Unmarshal(byteValue, &verses)
+		if err != nil {
+			panic(err)
+		}
+
+		allVerses = append(allVerses, verses...)
+	}
+
+	// write combined array to a new JSON file named "hindi_english_bible.json"
+	outputFile, err := os.Create("hindi_english_bible_v3.json")
+	if err != nil {
+		panic(err)
+	}
+	defer outputFile.Close()
+
+	encoder := json.NewEncoder(outputFile)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(allVerses)
+	if err != nil {
+		panic(err)
+	}
+}

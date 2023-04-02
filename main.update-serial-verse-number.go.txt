@@ -1,0 +1,61 @@
+//// Script #4
+//// Script to update the verse number in the final JSON file
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
+
+type Verses struct {
+	VerseCount  string             `json:"verse_count"`
+	BookNum     string             `json:"book_number"`
+	ChapterNum  string             `json:"chapter_number"`
+	BookName    SupportedLanguages `json:"book_name"`
+	Verse       SupportedLanguages `json:"verse"`
+	VerseNumber int                `json:"verse_number"`
+}
+
+type SupportedLanguages struct {
+	English string `json:"english"`
+	Hindi   string `json:"hindi"`
+}
+
+func main() {
+	file, err := os.Open("hindi_english_bible_v3.json")
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return
+	}
+	defer file.Close()
+
+	var verses []Verses
+	err = json.NewDecoder(file).Decode(&verses)
+	if err != nil {
+		fmt.Println("Error decoding JSON:", err)
+		return
+	}
+
+	for i := 0; i < len(verses); i++ {
+		verses[i].VerseNumber = i + 1
+	}
+
+	newFile, err := os.Create("updated_hindi_english_bible.json")
+	if err != nil {
+		fmt.Println("Error creating new file:", err)
+		return
+	}
+	defer newFile.Close()
+
+	encoder := json.NewEncoder(newFile)
+	encoder.SetIndent("", "  ")
+	err = encoder.Encode(verses)
+	if err != nil {
+		fmt.Println("Error encoding JSON:", err)
+		return
+	}
+
+	fmt.Println("VerseNumber updated successfully!")
+}
