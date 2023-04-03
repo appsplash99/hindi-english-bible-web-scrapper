@@ -25,12 +25,12 @@ type SupportedLanguages struct {
 // Defining Types
 
 type Verses struct {
-	VerseCount string `json:"verse_count"`    // 1001002
-	BookNum    string `json:"book_number"`    // 1
-	ChapterNum string `json:"chapter_number"` // 1
+	VerseCount string `json:"verse_count"` // 1001002
 
-	BookName SupportedLanguages `json:"book_name"` // { English: "genesis", Hindi: "xyz" }
-	Verse    SupportedLanguages `json:"verse"`     // { English: "genesis", Hindi: "xyz" }
+	Hindi_BookName   string `json:"hindi_book_name"`   // "उत्पत्ति"
+	English_BookName string `json:"english_book_name"` // "genesis"
+	Hindi_Verse      string `json:"hindi_verse"`
+	English_Verse    string `json:"english_verse"`
 
 	VerseNumber int `json:"verse_number"` // 1
 }
@@ -215,18 +215,16 @@ func main() {
 					// number_of_verses_parsed++
 					// fmt.Println("number_of_verses_parsed", number_of_verses_parsed)
 					data = append(data, Verses{
-						VerseCount:  strings.Join([]string{current_book_num, "0", current_chapter_num, "0", strconv.Itoa(verse_num)}, ""),
-						ChapterNum:  current_chapter_num,
-						BookNum:     current_book_num,
+						VerseCount: strings.Join([]string{current_book_num, "0", current_chapter_num, "0", strconv.Itoa(verse_num)}, ""),
+						// ChapterNum:  current_chapter_num,
+						// BookNum:     current_book_num,
 						VerseNumber: verse_num,
-						BookName: SupportedLanguages{
-							English: hindiEnglishBibleDetails.book_name.English,
-							Hindi:   hindiEnglishBibleDetails.book_name.Hindi,
-						},
-						Verse: SupportedLanguages{
-							English: each_cleaned_english_verse,
-							Hindi:   each_cleaned_hindi_verse,
-						},
+						// BookName
+						English_BookName: hindiEnglishBibleDetails.book_name.English,
+						Hindi_BookName:   hindiEnglishBibleDetails.book_name.Hindi,
+						// Verse
+						Hindi_Verse:   each_cleaned_hindi_verse,
+						English_Verse: each_cleaned_english_verse,
 					})
 				}
 

@@ -19,10 +19,10 @@ type SupportedLanguages struct {
 
 type Verses struct {
 	VerseCount  string             `json:"verse_count"`
-	BookNum     string             `json:"book_number"`
-	ChapterNum  string             `json:"chapter_number"`
-	BookName    SupportedLanguages `json:"book_name"`
-	Verse       SupportedLanguages `json:"verse"`
+	// BookNum     string             `json:"book_number"`
+	// ChapterNum  string             `json:"chapter_number"`
+	// BookName    SupportedLanguages `json:"book_name"`
+	// Verse       SupportedLanguages `json:"verse"`
 	VerseNumber int                `json:"verse_number"`
 }
 
