@@ -57,7 +57,6 @@ func main() {
 		CREATE TABLE IF NOT EXISTS verses (
 			verse_id INTEGER PRIMARY KEY,
 			english_book_name VARCHAR(255),
-			english_book_name VARCHAR(255),
 			hindi_book_name VARCHAR(255),
 			English_Verse TEXT,
 			Hindi_Verse TEXT
